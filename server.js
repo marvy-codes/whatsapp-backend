@@ -23,6 +23,16 @@ app.use(express.json())
 // api routes
 app.get("/", (req, res) => res.status(200).send("Hello world"));
 
+app.get('/messages/sync', (req, res) => {
+    Messages.find((err, data) => {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(data)
+        }
+    })
+});
+
 app.post('/messages/new', (req, res) => {
     const dbMessage = req.body;
     Messages.create(dbMessage, (err, data) => {
