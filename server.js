@@ -8,7 +8,12 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 //middleware
-app.use(express.json())
+app.use(express.json());
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Header", "*");
+    next();
+})
 
 // DB config
 const connection_url = "mongodb+srv://MarvyCodes:jGJYYqXtmce1xnX5@cluster0.vrzod.mongodb.net/whatsapp?retryWrites=true&w=majority";
@@ -42,7 +47,8 @@ db.once('open', () => {
             {
                 name: messageDetails.name,
                 message: messageDetails.message
-            })
+            });
+            console.log("Triggered pusher")
         } else {
             console.log('Error triggering Pusher')
         }
