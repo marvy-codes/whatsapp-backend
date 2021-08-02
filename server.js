@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from 'mongoose';
 import Messages from './dbMessages.js';
 import Pusher from 'pusher';
+import Cors from 'cors';
 
 //app config
 const app = express();
@@ -9,11 +10,7 @@ const port = process.env.PORT || 9000;
 
 //middleware
 app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Header", "*");
-    next();
-})
+app.use(Cors());
 
 // DB config
 const connection_url = "mongodb+srv://MarvyCodes:jGJYYqXtmce1xnX5@cluster0.vrzod.mongodb.net/whatsapp?retryWrites=true&w=majority";
